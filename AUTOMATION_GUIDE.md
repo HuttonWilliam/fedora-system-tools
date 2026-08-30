@@ -1,4 +1,7 @@
-# Automation Guide for Lubuntu System Tools 🤖
+Here is the raw Markdown file text, completely contained within a single code block so you can easily copy and paste the entire thing:
+
+```markdown
+# Automation Guide for Fedora System Tools 🤖
 
 This guide explains how to schedule the scripts in this repository to run automatically, covering both **cron** and **systemd timers** approaches.
 
@@ -33,8 +36,8 @@ This guide explains how to schedule the scripts in this repository to run automa
 
 ```bash
 # Clone the repository
-git clone https://github.com/HuttonWilliam/lubuntu-system-tools.git
-cd lubuntu-system-tools
+git clone [https://github.com/HuttonWilliam/fedora-system-tools.git](https://github.com/HuttonWilliam/fedora-system-tools.git)
+cd fedora-system-tools
 
 # Make all scripts executable
 chmod +x scripts/*.sh setup/*.sh
@@ -47,6 +50,7 @@ chmod +x scripts/*.sh setup/*.sh
 
 # Option C: Run all maintenance manually right now
 sudo ./scripts/auto-maintenance.sh
+
 ```
 
 ---
@@ -59,27 +63,30 @@ Cron is the traditional Unix scheduler. It runs commands at fixed times based on
 
 ```bash
 ./setup/install-cron.sh            # Interactive setup
-./setup/install-cron.sh --list     # List current lubuntu cron jobs
-./setup/install-cron.sh --remove   # Remove all lubuntu cron jobs
+./setup/install-cron.sh --list     # List current fedora cron jobs
+./setup/install-cron.sh --remove   # Remove all fedora cron jobs
 ./setup/install-cron.sh --help     # Show help
+
 ```
 
 ### Manual cron setup
 
 ```bash
 crontab -e    # Open your crontab in the default editor
+
 ```
 
 Add entries in this format:
 
 ```
 minute hour day month weekday  command
+
 ```
 
 #### Cron syntax reference
 
 | Field | Range | Special characters |
-|-------|-------|--------------------|
+| --- | --- | --- |
 | minute | 0–59 | `*` `,` `-` `/` |
 | hour | 0–23 | `*` `,` `-` `/` |
 | day of month | 1–31 | `*` `,` `-` `/` |
@@ -94,22 +101,24 @@ Common patterns:
 */30 * * * *   # Every 30 minutes
 0 */6 * * *    # Every 6 hours
 @reboot        # Once at system boot
+
 ```
 
 #### Example crontab entries
 
 ```bash
 # Daily backup at 2 AM
-0 2 * * *  /home/user/lubuntu-system-tools/scripts/backup-manager.sh >> /var/log/lubuntu-tools/backup.log 2>&1
+0 2 * * *  /home/user/fedora-system-tools/scripts/backup-manager.sh >> /var/log/fedora-tools/backup.log 2>&1
 
 # Weekly disk cleanup (Sunday 3 AM)
-0 3 * * 0  sudo /home/user/lubuntu-system-tools/scripts/disk-cleanup.sh >> /var/log/lubuntu-tools/disk-cleanup.log 2>&1
+0 3 * * 0  sudo /home/user/fedora-system-tools/scripts/disk-cleanup.sh >> /var/log/fedora-tools/disk-cleanup.log 2>&1
 
 # Daily system update at midnight
-0 0 * * *  sudo /home/user/lubuntu-system-tools/scripts/update-system.sh >> /var/log/lubuntu-tools/update.log 2>&1
+0 0 * * *  sudo /home/user/fedora-system-tools/scripts/update-system.sh >> /var/log/fedora-tools/update.log 2>&1
 
 # Hourly system info snapshot
-0 * * * *  /home/user/lubuntu-system-tools/scripts/sys-info.sh >> /var/log/lubuntu-tools/sys-info.log 2>&1
+0 * * * *  /home/user/fedora-system-tools/scripts/sys-info.sh >> /var/log/fedora-tools/sys-info.log 2>&1
+
 ```
 
 > **Tip:** Always use full absolute paths in cron entries.
@@ -127,6 +136,7 @@ Systemd timers are the modern replacement for cron. They integrate with the syst
 ./setup/install-systemd-timers.sh --status   # Show timer status
 ./setup/install-systemd-timers.sh --remove   # Remove all timers
 ./setup/install-systemd-timers.sh --help     # Show help
+
 ```
 
 Timer and service files are created in `~/.config/systemd/user/`.
@@ -135,30 +145,31 @@ Timer and service files are created in `~/.config/systemd/user/`.
 
 #### 1. Create a service file
 
-`~/.config/systemd/user/lubuntu-backup.service`:
+`~/.config/systemd/user/fedora-backup.service`:
 
 ```ini
 [Unit]
-Description=Lubuntu Home Backup
+Description=Fedora Home Backup
 After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/home/user/lubuntu-system-tools/scripts/backup-manager.sh
-StandardOutput=append:/var/log/lubuntu-tools/backup.log
-StandardError=append:/var/log/lubuntu-tools/backup.log
+ExecStart=/home/user/fedora-system-tools/scripts/backup-manager.sh
+StandardOutput=append:/var/log/fedora-tools/backup.log
+StandardError=append:/var/log/fedora-tools/backup.log
 
 [Install]
 WantedBy=default.target
+
 ```
 
 #### 2. Create a timer file
 
-`~/.config/systemd/user/lubuntu-backup.timer`:
+`~/.config/systemd/user/fedora-backup.timer`:
 
 ```ini
 [Unit]
-Description=Timer for Lubuntu Home Backup
+Description=Timer for Fedora Home Backup
 
 [Timer]
 OnCalendar=*-*-* 02:00:00
@@ -166,27 +177,31 @@ Persistent=true
 
 [Install]
 WantedBy=timers.target
+
 ```
 
 #### 3. Enable and start the timer
 
 ```bash
 systemctl --user daemon-reload
-systemctl --user enable lubuntu-backup.timer
-systemctl --user start lubuntu-backup.timer
+systemctl --user enable fedora-backup.timer
+systemctl --user start fedora-backup.timer
+
 ```
 
 #### 4. Check timer status
 
 ```bash
 systemctl --user list-timers
-systemctl --user status lubuntu-backup.timer
+systemctl --user status fedora-backup.timer
+
 ```
 
 ### Run timers at boot (without login)
 
 ```bash
 loginctl enable-linger $USER
+
 ```
 
 This allows user systemd timers to run even when you are not logged in.
@@ -201,6 +216,7 @@ weekly                   # Every Monday at midnight
 Sun *-*-* 03:00:00       # Every Sunday at 3 AM
 *-*-* 00/6:00:00         # Every 6 hours
 *-*-* *:00/30:00         # Every 30 minutes
+
 ```
 
 ---
@@ -217,13 +233,15 @@ Sun *-*-* 03:00:00       # Every Sunday at 3 AM
 ./scripts/auto-maintenance.sh --update     # Run only system update
 ./scripts/auto-maintenance.sh --ram        # Run only RAM management
 ./scripts/auto-maintenance.sh --help       # Show help
+
 ```
 
 Then schedule the master script via cron or a systemd timer:
 
 ```bash
 # Daily full maintenance at 3 AM via cron
-0 3 * * * sudo /home/user/lubuntu-system-tools/scripts/auto-maintenance.sh
+0 3 * * * sudo /home/user/fedora-system-tools/scripts/auto-maintenance.sh
+
 ```
 
 ---
@@ -231,7 +249,7 @@ Then schedule the master script via cron or a systemd timer:
 ## Recommended Schedules
 
 | Script | Recommended Frequency | Notes |
-|--------|-----------------------|-------|
+| --- | --- | --- |
 | `backup-manager.sh` | Daily at 2 AM | Protects recent work |
 | `disk-cleanup.sh` | Weekly (Sunday 3 AM) | Avoid too frequent |
 | `update-system.sh` | Daily at midnight | Keep system secure |
@@ -243,29 +261,31 @@ Then schedule the master script via cron or a systemd timer:
 
 ## Log Files
 
-All scripts write to `/var/log/lubuntu-tools/`:
+All scripts write to `/var/log/fedora-tools/`:
 
 ```
-/var/log/lubuntu-tools/
+/var/log/fedora-tools/
 ├── auto-maintenance-<timestamp>.log   # Master maintenance log
 ├── backup.log                         # Backup task output
 ├── disk-cleanup.log                   # Cleanup task output
 ├── update-system.log                  # Update task output
 ├── ram-manager.log                    # RAM task output
 └── sys-info.log                       # System info log
+
 ```
 
 ### Viewing logs
 
 ```bash
 # View latest maintenance run
-ls -t /var/log/lubuntu-tools/auto-maintenance-*.log | head -1 | xargs cat
+ls -t /var/log/fedora-tools/auto-maintenance-*.log | head -1 | xargs cat
 
 # Follow a log in real time
-tail -f /var/log/lubuntu-tools/backup.log
+tail -f /var/log/fedora-tools/backup.log
 
 # View systemd timer logs
-journalctl --user -u lubuntu-backup.service
+journalctl --user -u fedora-backup.service
+
 ```
 
 ---
@@ -275,33 +295,51 @@ journalctl --user -u lubuntu-backup.service
 ### Cron job not running
 
 1. Check the cron service is running:
-   ```bash
-   systemctl status cron
-   ```
+```bash
+systemctl status crond
+
+```
+
+
 2. Verify your crontab:
-   ```bash
-   crontab -l
-   ```
+```bash
+crontab -l
+
+```
+
+
 3. Check the system mail for cron error output:
-   ```bash
-   cat /var/mail/$USER
-   ```
+```bash
+cat /var/mail/$USER
+
+```
+
+
 4. Ensure the script has execute permission and uses absolute paths.
 
 ### Systemd timer not running
 
 1. Check if the timer is enabled and active:
-   ```bash
-   systemctl --user list-timers
-   ```
+```bash
+systemctl --user list-timers
+
+```
+
+
 2. Check the service logs:
-   ```bash
-   journalctl --user -u lubuntu-backup.service --since today
-   ```
+```bash
+journalctl --user -u fedora-backup.service --since today
+
+```
+
+
 3. Reload daemon after editing unit files:
-   ```bash
-   systemctl --user daemon-reload
-   ```
+```bash
+systemctl --user daemon-reload
+
+```
+
+
 
 ### Permission errors
 
@@ -310,32 +348,37 @@ Scripts that need elevated privileges should use `sudo`. For automated runs, add
 ```bash
 sudo visudo
 # Add (replace <your-username> with your actual username):
-<your-username> ALL=(ALL) NOPASSWD: /home/<your-username>/lubuntu-system-tools/scripts/disk-cleanup.sh
+<your-username> ALL=(ALL) NOPASSWD: /home/<your-username>/fedora-system-tools/scripts/disk-cleanup.sh
+
 ```
 
 ---
 
 ## Security Considerations
 
-- **Limit sudo scope**: Only grant `NOPASSWD` for specific scripts, not blanket access.
-- **Validate input**: Scripts should not accept untrusted input when running automatically.
-- **Review scripts before scheduling**: Understand what each script does before automating it.
-- **Protect log files**: Log files may contain system information. Ensure `/var/log/lubuntu-tools/` has appropriate permissions.
-- **Use absolute paths**: Always use absolute paths in cron entries to avoid PATH-related issues.
-- **Audit crontab**: Regularly review `crontab -l` to ensure no unauthorised entries exist.
+* **Limit sudo scope**: Only grant `NOPASSWD` for specific scripts, not blanket access.
+* **Validate input**: Scripts should not accept untrusted input when running automatically.
+* **Review scripts before scheduling**: Understand what each script does before automating it.
+* **Protect log files**: Log files may contain system information. Ensure `/var/log/fedora-tools/` has appropriate permissions.
+* **Use absolute paths**: Always use absolute paths in cron entries to avoid PATH-related issues.
+* **Audit crontab**: Regularly review `crontab -l` to ensure no unauthorised entries exist.
 
 ---
 
 ## Best Practices
 
 1. **Test before scheduling**: Run each script manually first to ensure it works correctly.
-2. **Use `--dry-run`**: Most scripts support `--dry-run` to preview changes safely.
+2. **Use `--dry-run**`: Most scripts support `--dry-run` to preview changes safely.
 3. **Back up crontab**: The installer automatically backs up your crontab before changes.
-4. **Monitor logs**: Check `/var/log/lubuntu-tools/` periodically for errors.
+4. **Monitor logs**: Check `/var/log/fedora-tools/` periodically for errors.
 5. **Avoid overlapping schedules**: Stagger tasks to prevent simultaneous resource usage.
 6. **Keep scripts updated**: Pull the latest changes from the repository regularly.
-7. **Prefer systemd timers**: For modern Lubuntu, systemd timers provide better logging and reliability.
+7. **Prefer systemd timers**: For modern Fedora, systemd timers provide better logging and reliability.
 
 ---
 
-*Lubuntu System Tools — ©️ 2026 William Hutton*
+*Fedora System Tools — ©️ 2026 William Hutton*
+
+```
+
+```
