@@ -1,4 +1,4 @@
-# Contributing to Lubuntu System Tools
+# Contributing to Fedora System Tools
 
 First off, thank you for taking the time to contribute! 🎉 It is people like you who make the open-source community such an amazing place to learn, inspire, and create. 
 
@@ -26,7 +26,7 @@ By participating in this project, you agree to abide by standard community behav
 ### Reporting Bugs
 Before creating a bug report, please check our existing **Issues** to see if the problem has already been reported. If it hasn't, please open a new issue and include:
 * **A clear, descriptive title** to help us identify the problem.
-* **Lubuntu Version** (e.g., Lubuntu 24.04 LTS) and system details.
+* **Lubuntu Version** (e.g., Fedora 44) and system details.
 * **Steps to reproduce** the issue so we can see it happen.
 * **What you expected to happen** versus what actually happened.
 * **Terminal output** or screenshots if they help explain the error.
