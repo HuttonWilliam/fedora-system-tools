@@ -1,5 +1,3 @@
-Here is the raw Markdown file text, completely contained within a single code block so you can easily copy and paste the entire thing:
-
 ```markdown
 # Automation Guide for Fedora System Tools 🤖
 
