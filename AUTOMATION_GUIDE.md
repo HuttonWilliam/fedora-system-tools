@@ -378,5 +378,3 @@ sudo visudo
 *Fedora System Tools — ©️ 2026 William Hutton*
 
 ```
-
-```
