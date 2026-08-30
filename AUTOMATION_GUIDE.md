@@ -1,4 +1,3 @@
-```markdown
 # Automation Guide for Fedora System Tools 🤖
 
 This guide explains how to schedule the scripts in this repository to run automatically, covering both **cron** and **systemd timers** approaches.
@@ -377,4 +376,3 @@ sudo visudo
 
 *Fedora System Tools — ©️ 2026 William Hutton*
 
-```
