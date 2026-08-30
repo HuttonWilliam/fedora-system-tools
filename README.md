@@ -1,9 +1,8 @@
-```markdown
 Copyright © 2026 William Hutton
 Licensed under the GNU General Public License v3.0 (GPLv3).
-# Lubuntu System Tools 🛠️
+# Fedora System Tools 🛠️
 
-This repository contains custom Bash scripts designed to optimize, monitor, and maintain Lubuntu workstations—tailored specifically for maximum performance, lower RAM usage, and faster boot times.
+This repository contains custom Bash scripts designed to optimize, monitor, and maintain Fedora workstations—tailored specifically for maximum performance, lower resource usage, and faster boot times.
 
 ## 📂 Project Structure
 
@@ -47,7 +46,7 @@ This repository contains custom Bash scripts designed to optimize, monitor, and 
 
 #### 🧹 Disk Cleanup Utility
 * **Location**: `scripts/disk-cleanup.sh`
-* **Features**: Cleans `/tmp`, purges APT/Snap caches, deletes logs older than 30 days, and empties trash. Includes a safe `--dry-run` preview mode.
+* **Features**: Cleans `/tmp`, purges DNF/package manager caches, deletes logs older than 30 days, and empties trash. Includes a safe `--dry-run` preview mode.
 * **How to use**:
     ```bash
     sudo ./scripts/disk-cleanup.sh
@@ -65,10 +64,10 @@ This repository contains custom Bash scripts designed to optimize, monitor, and 
 
 #### 🔄 System Update Streamliner
 * **Location**: `scripts/update-system.sh`
-* **Description**: One-touch script to handle repository updates, package upgrades, and residual package removals.
+* **Description**: One-touch script to handle DNF repository updates, package upgrades, and residual package removals.
 * **How to use**:
     ```bash
-    ./scripts/update-system.sh
+    sudo ./scripts/update-system.sh
     ```
 
 ---
@@ -103,7 +102,7 @@ This repository contains custom Bash scripts designed to optimize, monitor, and 
 
 #### 🛠️ Service Manager
 * **Location**: `scripts/service-manager.sh`
-* **Description**: Audits active `systemd` items and allows toggling of boot services (e.g., disabling printer or bluetooth daemons) to save background memory.
+* **Description**: Audits active `systemd` items and allows toggling of boot services to save background memory.
 * **How to use**:
     ```bash
     ./scripts/service-manager.sh list
@@ -129,77 +128,3 @@ You can schedule automated execution of these maintenance routines via interacti
 ```bash
 sudo ./setup/install-systemd-timers.sh
 sudo ./setup/install-systemd-timers.sh --status
-
-```
-
-### Option 2: Traditional Cron Jobs
-
-```bash
-./setup/install-cron.sh
-
-```
-
-### Option 3: Master Maintenance Utility
-
-To manually process all critical tasks (backup, cleanup, update) sequentially inside a single terminal execution block:
-
-```bash
-./scripts/auto-maintenance.sh
-
-```
-
-### Recommended Schedules
-
-| Script | Frequency | Target Window |
-| --- | --- | --- |
-| `backup-manager.sh` | Daily | 2:00 AM |
-| `update-system.sh` | Daily | Midnight |
-| `disk-cleanup.sh` | Weekly | Sunday 3:00 AM |
-| `auto-maintenance.sh` | Weekly | Scheduled Maintenance |
-
-*All automated logs are captured under `/var/log/lubuntu-tools/`.* *See `AUTOMATION_GUIDE.md` for deep-dive environment variables and cron setups.*
-
----
-
-## 🚀 Quick Start Guide
-
-1. **Clone the repository:**
-```bash
-git clone [https://github.com/HuttonWilliam/lubuntu-system-tools.git](https://github.com/HuttonWilliam/lubuntu-system-tools.git)
-cd lubuntu-system-tools
-
-```
-
-
-2. **Grant execution permissions to scripts:**
-```bash
-chmod +x scripts/*.sh setup/*.sh
-
-```
-
-
-3. **Execute desired tooling module:**
-```bash
-./scripts/sys-info.sh
-
-```
-
-
-
----
-
-## 💡 Engineering Tips & Best Practices
-
-* **Help Blocks**: Append `--help` or `help` options to any utility to view embedded parameter usage syntax.
-* **Privileges**: System operations altering hardware states or base directories (`service-manager.sh`, `optimize-boot.sh`, `disk-cleanup.sh`) require `sudo` execution.
-* **Safety Precaution**: Utilize `--dry-run` arguments where available to inspect modifications safely prior to execution.
-
-## 📜 License
-
-This architecture is deployed and open-sourced under the terms of the **GNU General Public License v3.0 (GPLv3)**.
-
----
-
-*Tested and certified for Lubuntu 24.04 LTS & Lubuntu 26.04 environments.* *References: [Lubuntu Official](https://lubuntu.me) | [Ubuntu Discourse*](https://discourse.ubuntu.com)
-
-```
