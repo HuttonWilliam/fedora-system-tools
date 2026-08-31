@@ -2,7 +2,7 @@
 
 First off, thank you for taking the time to contribute! 🎉 It is people like you who make the open-source community such an amazing place to learn, inspire, and create. 
 
-Any contributions you make to Lubuntu System Tools by William Hutton are greatly appreciated.
+Any contributions you make to Fedora System Tools by William Hutton are greatly appreciated.
 
 ---
 
