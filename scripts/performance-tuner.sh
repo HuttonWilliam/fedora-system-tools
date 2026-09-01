@@ -8,7 +8,7 @@
 # the Free Software Foundation, either version 3 of the License.
 # ========================================================================
 
-# System Performance Optimizer for Lubuntu
+# System Performance Optimizer for Fedora
 # Optimize system performance and resource usage
 # Usage: ./performance-tuner.sh [--optimize] [--report] [--cpu GOVERNOR] [--reset] [--help]
 
@@ -84,7 +84,7 @@ apply() {
 
 show_metrics() {
     echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║   Lubuntu System Performance Optimizer ║${NC}"
+    echo -e "${GREEN}║   Fedora System Performance Optimizer ║${NC}"
     echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
     echo ""
     echo -e "${CYAN}── CPU ─────────────────────────────────────${NC}"
@@ -253,7 +253,7 @@ generate_report() {
 
     {
         echo "========================================="
-        echo " Lubuntu Performance Report"
+        echo " Fedora Performance Report"
         echo " Generated: $(date)"
         echo "========================================="
         echo ""
