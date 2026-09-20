@@ -69,4 +69,3 @@ When you are ready to submit your code changes, please follow these steps:
 * Write robust error handling (e.g., check if commands exist before running them).
 * Follow standard Linux scripting guidelines (like ShellCheck rules for Bash or PEP 8 for Python).
 * Add helpful comments to explain complex logic or specific system commands.
-* 
