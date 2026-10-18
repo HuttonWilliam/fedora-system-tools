@@ -26,7 +26,7 @@ By participating in this project, you agree to abide by standard community behav
 ### Reporting Bugs
 Before creating a bug report, please check our existing **Issues** to see if the problem has already been reported. If it hasn't, please open a new issue and include:
 * **A clear, descriptive title** to help us identify the problem.
-* **Lubuntu Version** (e.g., Fedora 44) and system details.
+* **Fedora Version** (e.g., Fedora 44) and system details.
 * **Steps to reproduce** the issue so we can see it happen.
 * **What you expected to happen** versus what actually happened.
 * **Terminal output** or screenshots if they help explain the error.
