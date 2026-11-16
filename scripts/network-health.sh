@@ -18,7 +18,8 @@ PING_TIMEOUT=5
 PING_COUNT=10
 DNS_SERVERS=("8.8.8.8" "1.1.1.1" "208.67.222.222")
 TEST_HOSTS=("google.com" "cloudflare.com" "github.com")
-LOG_DIR="/var/log/fedora-tools"
+LOG_DIR="$HOME/logs/fedora-tools"
+mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/network-health-$(date +%Y%m%d-%H%M%S).log"
 
 print_status()  { echo -e "${GREEN}[✓]${NC} $1"; }
@@ -44,8 +45,8 @@ OPTIONS:
     --dns            Test DNS resolver functionality
     --speed          Perform speed test (requires speedtest-cli)
     --stability      Run 5-minute stability test
-    --interface      Show detailed network interface info
     --routes         Display routing table
+    --interface      Show detailed network interface info
     --help           Show this help message
 
 LOG FILES:
@@ -55,4 +56,34 @@ DEPENDENCIES:
     - ping, curl (standard)
     - bind-utils, bc (required, checked automatically)
     - speedtest-cli (optional for speed tests)
+EOF
+}
+# Parse arguments
+case "${1:-}" in
+    --help) show_help; exit 0 ;;
+esac
 
+# Dependency check
+check_dependencies() {
+    local missing=()
+    command -v ping &>/dev/null || missing+=("iputils")
+    command -v dig &>/dev/null || missing+=("bind-utils")
+    command -v bc &>/dev/null || missing+=("bc")
+    command -v curl &>/dev/null || missing+=("curl")
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        print_error "Missing dependencies: ${missing[*]}"
+        echo "Install with: sudo dnf install ${missing[*]}"
+        exit 1
+    fi
+    print_status "All dependencies found"
+}
+
+# Run diagnostics
+run_all() {
+    log_output "Network Health Check - $(date)"
+    check_dependencies
+    # ... your ping, DNS, latency tests here ...
+}
+
+run_all

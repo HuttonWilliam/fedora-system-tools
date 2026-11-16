@@ -43,4 +43,22 @@ OPTIONS:
     --log-only       Log current bandwidth and exit (no monitor)
     --history        Show bandwidth history from today
     --help           Show this help message
+EOF
+}
 
+# Parse arguments
+case "${1:-}" in
+    --help) show_help; exit 0 ;;
+    --summary)
+        ip -s link
+        exit 0
+        ;;
+    *)
+        # Real-time monitor
+        echo "Monitoring bandwidth (Ctrl+C to stop)..."
+        while true; do
+            ip -s link show
+            sleep 1
+        done
+        ;;
+esac
